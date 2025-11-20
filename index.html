@@ -1,120 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Exun hack</title>
+    <title>Exun Hack</title>
+
+    <style>
+        @font-face {
+            font-family: depixel;
+            src: url(./assets/depixel/DePixelBreit.ttf);
+        }
+
+        #passwordPopup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #444444; 
+            padding: 0; 
+            border: 2px solid black;
+            width: 600px; 
+            height: 260px; 
+            text-align: center;
+            display: none;
+            box-shadow: 4px 4px 0px black;
+            color: white;
+            z-index: 5000;
+            overflow: hidden;
+            font-family: depixel; 
+        }
+        
+        .popup-header {
+            background-color: #00008b; 
+            color: white;
+            font-family: depixel;
+            font-size: 16px;
+            text-align: left;
+            padding: 2px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid black;
+        }
+
+        .popup-header .close-btn {
+            background-color: #c0c0c0; 
+            border: 2px outset #ffffff; 
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 1px 1px 0px black;
+        }
+
+        .popup-content {
+            padding: 20px;
+            color: black;
+            background-color: #c0c0c0; 
+            height: calc(100% - 25px); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            font-family: 'Courier New', Courier, monospace; 
+            font-size: 14px;
+        }
+        
+        .popup-title {
+            color: black;
+            font-size: 18px;
+            margin-bottom: 25px; 
+            font-weight: bold;
+        }
+
+        .password-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px; 
+            width: 80%;
+        }
+
+        .password-field label {
+            width: 100px;
+            text-align: right;
+            padding-right: 10px;
+            font-family: depixel;
+            font-size: 14px;
+            color: black;
+        }
+
+        #passwordPopup input {
+            width: 100%;
+            padding: 5px; 
+            background: white;
+            border: 2px inset #555; 
+            color: black;
+            font-size: 14px; 
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            box-sizing: border-box;
+        }
+        
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px; 
+            width: 80%;
+            justify-content: flex-start;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            margin-right: 10px;
+            border: 2px solid black;
+            background-color: white;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .checkbox-row label {
+            font-family: depixel;
+            font-size: 12px;
+            color: black;
+        }
+
+        .button-row {
+            margin-top: 10px;
+        }
+        
+        #passwordPopup button {
+            margin: 0 5px; 
+            padding: 5px 15px; 
+            background: #c0c0c0;
+            border: 2px outset #ffffff; 
+            color: black;
+            font-size: 14px;
+            font-family: depixel;
+            cursor: pointer;
+            box-shadow: 1px 1px 0px black;
+            min-width: 80px;
+        }
+
+        #passwordPopup button:active {
+            border: 2px inset #000; 
+        }
+        
+        #codeZMessage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #202020; 
+            font-family: depixel;
+            color: #B40D0D; 
+            text-align: center;
+            display: none;
+            z-index: 5001; 
+            padding-top: 50px; 
+            box-sizing: border-box;
+        }
+        
+        #codeZMessage .wrong-password {
+            font-size: 20px;
+            color: #7A090B; 
+            margin-bottom: 20px; 
+           
+        }
+
+        #codeZMessage .initiating-code-z {
+            font-size: 40px; 
+            color: #7A090B;
+            line-height: 1.2;
+        }
+
+    </style>
 </head>
+
 <body>
     <div class="container">
+
         <div class="navbar">
             <div class="icons">
-                <img src="./assets/wifi.svg" alt="" class="icon">
-                <img src="./assets/speaker.svg" alt="" class="icon">
-                <img src="./assets/battery.svg" alt="" class="icon">
+                <img src="./assets/wifi.svg" class="icon" alt="">
+                <img src="./assets/speaker.svg" class="icon" alt="">
+                <img src="./assets/battery.svg" class="icon" alt="">
             </div>
             <p class="nav-text">Fri 9:41</p>
         </div>
 
-        <div class="cfile">
-            <img src="./assets/encryptedfile.svg" alt="" class="file">
-            <p class="text" id="cfile">Encrypted<br>File</p>
+        <div class="cfile clickable" id="encryptedIcon">
+            <img src="./assets/encryptedfile.svg" class="file" alt="">
+            <p class="text" style="color:white;">Encrypted<br>File</p>
         </div>
 
-        <div class="computer" id="computerIcon">
+        <div class="computer clickable" id="computerIcon">
             <img src="./assets/computer.svg" alt="">
-            <p class="text" id="comp">Computer</p>
+            <p class="text">Computer</p>
         </div>
 
         <div class="bottomnav">
             <img src="./assets/nav.png" alt="">
-            <div class="righticons"> 
-                <img src="./assets/settings.svg" alt="" class="settings">
-                <img src="./assets/dustbin.svg" alt="" class="trash">
+            <div class="righticons">
+                <img src="./assets/settings.svg" class="settings" alt="">
+                <img src="./assets/dustbin.svg" class="trash" alt="">
+                <img src="./assets/filexp.svg" alt="" class="fileicon" style="position: absolute; left: 1000px;">
+                <img src="./assets/poweroff.svg" alt="" class="shutoff">
             </div>
         </div>
 
-<div class="filexp" id="fileExplorer">
-    <div class="textbar">
-        <img src="./assets/line.svg" alt="" class="line">
-        <p class="filetxt">File Explorer</p>
-    </div>
+        <div class="filexp" id="fileExplorer">
 
-    <div class="computer">
-        <img src="./assets/computer.svg" alt="">
-        <p class="desktop">Desktop</p>
-    </div>
+            <div class="textbar">
+                <img src="./assets/line.svg" class="line" alt="">
+                <p class="filetxt">File Explorer</p>
+            </div>
 
-    <div class="ldc drive-small">
-        <img src="./assets/arrow.svg" class="arrow">
-        <img src="./assets/smalldisk.svg" class="smalldisk">
-        <p class="c">Local Disk (C:)</p>
-    </div>
+            <div class="computer">
+                <img src="./assets/computer.svg" alt="">
+                <p class="desktop">Desktop</p>
+            </div>
 
-    <div class="nvd drive-small">
-        <img src="./assets/arrow.svg" class="arrow">
-        <img src="./assets/smalldisk.svg" class="smalldisk">
-        <p class="d">New Volume (D:)</p>
-    </div>
+            <div class="ldc drive-small">
+                <img src="./assets/arrow.svg" class="arrow" alt="">
+                <img src="./assets/smalldisk.svg" class="smalldisk" alt="">
+                <p class="c">Local Disk (C:)</p>
+            </div>
 
-    <div class="nve drive-small">
-        <img src="./assets/arrow.svg" class="arrow">
-        <img src="./assets/smalldisk.svg" class="smalldisk">
-        <p class="e">New Volume (E:)</p>
-    </div>
+            <div class="nvd drive-small">
+                <img src="./assets/arrow.svg" class="arrow" alt="">
+                <img src="./assets/smalldisk.svg" class="smalldisk" alt="">
+                <p class="d">New Volume (D:)</p>
+            </div>
 
-    <img src="./assets/divider.svg" class="divider">
+            <div class="nve drive-small">
+                <img src="./assets/arrow.svg" class="arrow" alt="">
+                <img src="./assets/smalldisk.svg" class="smalldisk" alt="">
+                <p class="e">New Volume (E:)</p>
+            </div>
 
-    <div class="drive-info">
+            <img src="./assets/divider.svg" class="divider" alt="">
 
-    <div class="drivebox">
-        <img src="./assets/bigdisk.svg">
-        <div class="info">
-            <p>Local Disk (C:)</p>
-            <img src="./assets/halfbar.svg">
-            <p>200 GB free of 256 GB</p>
+            <div class="drive-info">
+
+                <div class="drivebox">
+                    <img src="./assets/bigdisk.svg" alt="">
+                    <div class="info">
+                        <p>Local Disk (C:)</p>
+                        <img src="./assets/halfbar.svg" alt="">
+                        <p>200 GB free of 256 GB</p>
+                    </div>
+                </div>
+
+                <div class="drivebox">
+                    <img src="./assets/bigdisk.svg" alt="">
+                    <div class="info">
+                        <p>New Volume (D:)</p>
+                        <img src="./assets/bar.svg" alt="">
+                        <p>512 GB free of 512 GB</p>
+                    </div>
+                </div>
+
+                <div class="drivebox">
+                    <img src="./assets/bigdisk.svg" alt="">
+                    <div class="info">
+                        <p>New Volume (E:)</p>
+                        <img src="./assets/bar.svg" alt="">
+                        <p>512 GB free of 512 GB</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
 
-    <div class="drivebox">
-        <img src="./assets/bigdisk.svg">
-        <div class="info">
-            <p>New Volume (D:)</p>
-            <img src="./assets/bar.svg">
-            <p>512 GB free of 512 GB</p>
+        <div class="window2" id="window2" style="display: none;">
+            <div class="textbar2">
+                <img src="./assets/line.svg" class="line" alt="">
+                <p class="filetxt">Encrypted Files</p>
+            </div>
+
+            <div class="files">
+                <div class="file"><img src="./assets/file.png" alt=""><p>File I</p></div>
+                <div class="file"><img src="./assets/file.png" alt=""><p>File II</p></div>
+                <div class="file"><img src="./assets/file.png" alt=""><p>File III</p></div>
+                <div class="file"><img src="./assets/file.png" alt=""><p>File IV</p></div>
+                <div class="file"><img src="./assets/file.png" alt=""><p>File V</p></div>
+            </div>
         </div>
+
     </div>
 
-    <div class="drivebox">
-        <img src="./assets/bigdisk.svg">
-        <div class="info">
-            <p>New Volume (E:)</p>
-            <img src="./assets/bar.svg">
-            <p>512 GB free of 512 GB</p>
+    <div id="passwordPopup">
+        <div class="popup-header">
+            <span>Encrypted Folder</span>
+            <div class="close-btn" onclick="document.getElementById('passwordPopup').style.display='none'">X</div>
         </div>
-    </div>
+        
+        <div class="popup-content">
+            <p class="popup-title">This folder is password protected</p>
 
-</div>
+            <div class="password-field">
+                <label for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" maxlength="15" placeholder="Enter Password">
+            </div>
+            
+            <div class="checkbox-row">
+                <input type="checkbox" id="showPasswordCheckbox">
+                <label for="showPasswordCheckbox">Show Password</label>
+            </div>
 
+            <div class="button-row">
+                <button id="cancelPassword">Cancel</button>
+                <button id="submitPassword">Submit</button>
+            </div>
+        </div>
 
-    </div>
-</div>
-
-
+        <div id="codeZMessage">
+            <div class="wrong-password">WRONG PASSWORD</div>
+            <div class="initiating-code-z">INITIATING CODE - Z</div>
+        </div>
     </div>
 
     <script>
-    const computerIcon = document.getElementById("computerIcon");
-    const fileExplorer = document.getElementById("fileExplorer");
+        const computerIcon = document.getElementById("computerIcon");
+        const fileExplorer = document.getElementById("fileExplorer");
 
-    computerIcon.addEventListener("click", () => {
-        fileExplorer.style.display =
-            (fileExplorer.style.display === "none" || fileExplorer.style.display === "")
-            ? "block"
-            : "none";
-    });
-</script>
+        const encryptedIcon = document.getElementById("encryptedIcon");
+        const window2 = document.getElementById("window2");
+
+        const passwordPopup = document.getElementById("passwordPopup");
+        const passwordInput = document.getElementById("passwordInput");
+        const submitPassword = document.getElementById("submitPassword");
+        const cancelPassword = document.getElementById("cancelPassword");
+        const codeZMessage = document.getElementById("codeZMessage");
+        const showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
+
+        const correctPassword = "etinuXeTaiNi131";
+
+        computerIcon.addEventListener("click", () => {
+            fileExplorer.style.display =
+                fileExplorer.style.display === "block" ? "none" : "block";
+        });
+
+        
+        encryptedIcon.addEventListener("click", () => {
+            if (window2.style.display === "block") {
+                window2.style.display = "none";
+            } else {
+                resetPasswordPopup();
+                passwordPopup.style.display = "block";
+            }
+        });
+
+        function resetPasswordPopup() {
+            document.querySelector('.popup-content').style.display = "flex"; 
+            
+            codeZMessage.style.display = "none";
+            
+            passwordInput.value = "";
+            passwordInput.type = "password";
+            showPasswordCheckbox.checked = false;
+        }
+
+        submitPassword.addEventListener("click", () => {
+            if (passwordInput.value === correctPassword) {
+                passwordPopup.style.display = "none";
+                window2.style.display = "block";
+            } else {
+                triggerCodeZ();
+            }
+        });
+        
+        function triggerCodeZ() {
+            document.querySelector('.popup-content').style.display = "none";
+
+            codeZMessage.style.display = "flex"; 
+            codeZMessage.style.flexDirection = "column";
+
+            setTimeout(() => {
+                passwordPopup.style.display = "none";
+                resetPasswordPopup();
+            }, 5000);
+        }
+        cancelPassword.addEventListener("click", () => {
+            passwordPopup.style.display = "none";
+            resetPasswordPopup();
+        });
+        
+        showPasswordCheckbox.addEventListener("change", (e) => {
+            passwordInput.type = e.target.checked ? "text" : "password";
+        });
+
+    </script>
 
 </body>
+
 </html>
